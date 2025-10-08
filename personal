@@ -1,0 +1,190 @@
+/**
+ * Page: Home
+ * Purpose: Personal academic homepage with hero, skills, research, awards, CV, and contact sections (light theme).
+ */
+
+import { SiteHeader } from '../components/layout/SiteHeader'
+import { ScrollProgressBar } from '../components/layout/ScrollProgressBar'
+import { Hero } from '../components/hero/Hero'
+import { Section } from '../components/layout/Section'
+import { SkillPill } from '../components/skills/SkillPill'
+import { BarChart3, Database, Globe2, Sigma, Code, Map, Award as AwardIcon } from 'lucide-react'
+import { ResearchCard } from '../components/research/ResearchCard'
+import { Reveal } from '../components/common/Reveal'
+import { ContactPanel } from '../components/contact/ContactPanel'
+import { Footer } from '../components/layout/Footer'
+import { PdfPreview } from '../components/common/PdfPreview'
+
+/**
+ * Home - main landing page composing multiple content sections.
+ * Sections: Hero, Skills, Selected Research, Awards, CV, Contact, Visual banner.
+ */
+export default function Home() {
+  /** Skills list: methods and tools */
+  const skills = [
+    { label: 'Causal inference', icon: Sigma },
+    { label: 'Micro data', icon: Database },
+    { label: 'Policy evaluation', icon: BarChart3 },
+    { label: 'Stata / R / Python', icon: Code },
+    { label: 'GIS', icon: Map },
+    { label: 'Urban & public', icon: Globe2 },
+  ]
+
+  /** Selected research papers (only author's works) */
+  const research = [
+    {
+      title: '围绕电商平台的产业链：线上加强线下集聚的证据',
+      venue: '管理世界 (R&R); 合作者：张莉、陈强远',
+      year: 'R&R',
+      abstract:
+        '集聚效应是城市经济的学理基础和核心话题，但就电商平台“是否”“如何”影响了城市产业集群的形成和溢出效应，现有文献缺乏深入讨论和微观证据。基于世界级独角兽平台公司SHEIN入驻这一准自然冲击，本文使用了中国工商企业注册数据、广东省纺织服装行业全样本企业年度汇算清缴数据、企业经营业务工序文本等丰富资料，以及地理距离划分圆环的广义双重差分等研究设计，考察了SHEIN入驻对纺织本地服装产业集群的影响。研究发现：首先，电商平台企业SHEIN的入驻，促进了线下邻近地区纺织服装企业集聚，并呈现出地理衰减规律。在各类稳健性检验和干扰因素排除后，这一结论仍成立。其次，SHEIN电商平台促成的线下邻近产业集聚，并非企业选址自选择、自有工厂随迁、市场因素等竞争性因素导致的。最后，SHEIN入驻带来的纺织服装产业集群，源于产业链垂直分工、企业绩效提升、行业知识溢出、市场风险抵御等作用机制。本文的研究既为电商平台促进线下产业集群提供了经验证据和学理释义，回应了数字时代下产业集群形成中地理距离为何仍然重要，更为地方政府招商引资、高质量产业集群培育等提供借鉴。',
+      tags: ['独角兽企业', '希音', '集聚效应', '电商平台', '链主企业'],
+      links: [],
+    },
+    {
+      title: '税制改革与以地谋发展模式转型：供需分析和政策优化',
+      venue: '统计研究 (第三轮 R&R); 合作者：张莉、杨海生',
+      year: 'R&R',
+      abstract:
+        '当前，新一轮财税体制改革意义重大，重塑地方政府的以地谋发展行为和激发市场主体的高质量发展迫在眉睫。“营改增”是我国财税体制现代化的重大改革，本文以“营改增”政策为准自然实验，基于土地市场网2010年至2016年的微观土地出让信息和匹配了地块的税收调查数据，实证检验了此改革如何影响产业用地市场的供需双方，以及基于机器学习方法提出政策优化具体方向。结果表明，相比其他城市，试点城市在政策推行后工业用地的出让面积显著减少了10%，交易规模下降7%，实际单价上升5%，且效应在建设用地指标约束较强的城市中更为突出，在与服务业关联更紧密的行业以及质量较好的高等级地块更为明显。进一步地，采用因果路径分析考察了“财政激励效应”和“需求冲击效应”及二者的相对重要性，发现“营改增”使得制造业实际增值税率下降，这对政府而言是负向的财政激励，进而减少了出让工业用地培育增值税税源的动机；而在需求侧，这一税制改革使得制造业企业资源配置更合理，放缓了粗放式购置土地扩张厂房的动机，因此最终工业用地交易规模减少。最后，基于市场均衡处理效应框架的分析表明，工业用地的市场化交易与集约节约利用仍是未来改革的重点。本文的研究结论能为后续深化财税体制现代化改革以及城市土地配置发展目标提供优化方向。',
+      tags: ['税制改革', '营改增', '工业用地', '因果路径分析', '市场均衡下的处理效应'],
+      links: [],
+    },
+    {
+      title: '财政压力与住宅“大地块”：开源和节流的双重视角',
+      venue: 'Working Paper · 博士学位论文（求职论文）部分; 合作者：张莉、黎婉玉',
+      year: '2025',
+      abstract:
+        '本文分析了财政压力对中国住宅用地“大地块”供给格局的影响，并揭示财政体制变革下地方政府土地治理的行为逻辑。以全面“营改增”后2016年新增值税分成改革为背景，研究发现在财政压力显著加剧时，地方政府往往通过扩大住宅地块单宗出让面积和强化地块溢价实现“开源”，同时有动机采用土地合同配建等方式将部分公共服务责任转嫁给市场主体，实现“节流”。2016年全面“营改增”后，出让大面积地块的数量和比例显著上升，住宅地价整体走高，特别是在竞争性拍卖模式下尤为明显。与此同时，上述模式强化了公共设施用地在“大地块”周围的集聚，削弱了城市公共资源的均衡分配。研究建议健全财税改革后的动态监测和绩效反馈机制，完善转移支付制度，统筹推进高质量城市空间治理与住房品质提升，实现财税稳定、土地有序供应与公共服务均等化。',
+      tags: ['住宅用地', '大地块', '增值税分成改革', '求职论文'],
+      links: [],
+    },
+    {
+      title: 'Pains or Gains: the Spillover Effects of Superland in China',
+      venue: 'In progress; With ZHANG Li, LV Jinyi',
+      year: 'In progress',
+      abstract:
+        'Motivation for this paper stems from our interest in the distinctive features of Chinese residential communities that set them apart from those in other countries—namely, their enclosed nature and their large scale. Returning to the primary land market, we take super-large plots (those exceeding the size limits set by their respective cities) as an example and apply a geographic DID approach to analyze their impact on population concentration and road network density within a certain spatial range, and whether this further influences consumption vitality and diversity. 文章状态：in progress and coming soon！',
+      tags: ['Superland', 'geographic DID', 'spillover', 'China'],
+      links: [],
+    },
+  ]
+
+  /** Awards list data */
+  const awards = [
+    { title: '第五届发展经济学论文大赛', detail: '博士生组二等奖' },
+    { title: '“新发展阶段的经济学”暑期学校', detail: '优秀论文' },
+    { title: '中山大学研究生一等奖学金', detail: '2022–2025' },
+  ]
+
+  return (
+    <div
+      id="top"
+      className="min-h-screen bg-neutral-50 text-neutral-900 antialiased selection:bg-indigo-500/15 selection:text-neutral-900 scroll-smooth"
+    >
+      <ScrollProgressBar />
+      <SiteHeader />
+      <main>
+        <Hero />
+
+        <Section
+          id="skills"
+          title="Skills & Tools"
+          description="Econometrics methods, empirical strategies, and tooling I use in research and applied projects."
+        >
+          <Reveal className="flex flex-wrap gap-2">
+            {skills.map((s, i) => (
+              <div key={s.label} className="inline-block">
+                <Reveal delayMs={i * 50}>
+                  <SkillPill label={s.label} icon={s.icon} />
+                </Reveal>
+              </div>
+            ))}
+          </Reveal>
+        </Section>
+
+        <Section
+          id="research"
+          title="Selected Research"
+          description="A snapshot of ongoing and recent projects. Get in touch for drafts or full materials."
+        >
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+            {research.map((r, i) => (
+              <Reveal key={r.title} delayMs={i * 80}>
+                <ResearchCard
+                  title={r.title}
+                  venue={r.venue}
+                  year={r.year}
+                  abstract={r.abstract}
+                  tags={r.tags}
+                  links={r.links}
+                />
+              </Reveal>
+            ))}
+          </div>
+        </Section>
+
+        <Section
+          id="awards"
+          title="Awards / 荣誉"
+          description="部分奖项与荣誉。"
+          compact
+        >
+          <Reveal>
+            <ul className="space-y-3">
+              {awards.map((a) => (
+                <li key={a.title} className="flex items-start gap-3 rounded-lg border border-neutral-200 bg-white p-3">
+                  <div className="mt-0.5 rounded-md bg-neutral-900/90 p-1.5 text-white">
+                    <AwardIcon size={14} />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-neutral-900">{a.title}</p>
+                    <p className="text-xs text-neutral-600">{a.detail}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </Section>
+
+        <Section
+          id="cv"
+          title="CV / 简历"
+          description="在线预览与下载。若浏览器无法预览，请使用右上角按钮在新标签页打开或下载。"
+        >
+          <Reveal>
+            <div className="mt-2">
+              <PdfPreview src="高涵-个人简历.pdf" title="高涵 - 个人简历" downloadName="GAO-Han-CV.pdf" />
+            </div>
+          </Reveal>
+        </Section>
+
+        <Section id="contact" title="Contact" description="Feel free to drop an email." compact>
+          <Reveal>
+            <ContactPanel
+              email="gaoh59@mail2.sysu.edu.cn"
+              xhsHandle="@哆啦A呵"
+              xhsId="959106879"
+              xhsUrl="https://www.xiaohongshu.com/user/profile/5ac73c2ae8ac2b3757529dbb?xsec_token=YBtP14Z5kIm3gPKHAPDheiy9VetXmd37-yDlenJ5yz4sI=&xsec_source=app_share&xhsshare=CopyLink&shareRedId=N0dFNzZINkpLP0ZFO0ozPTs6Pjk9SUhL&apptime=1759926876&share_id=57768869be3449198cd3c645c6734da9"
+            />
+          </Reveal>
+        </Section>
+
+        <section className="pb-10">
+          <div className="mx-auto max-w-6xl px-4">
+            <Reveal>
+              <div className="overflow-hidden rounded-xl border border-neutral-200 bg-white">
+                <img
+                  src="https://pub-cdn.sider.ai/u/U05XH9W7KJW/web-coder/68e650a26cd86d39751ec815/resource/7ed36526-ddca-462f-ae1f-8728885677ed.jpeg"
+                  className="h-44 w-full object-cover"
+                  alt="City at night"
+                />
+              </div>
+            </Reveal>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </div>
+  )
+}
